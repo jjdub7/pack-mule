@@ -19,7 +19,7 @@ def matcher(input_data):
         })
 
     df = pd.DataFrame(pack_data)
-    df['qty_size'] = df[['Pack_ID','color_code','qty_size']].groupby(['Pack_ID','color_code'])['qty_size'].transform(lambda x: '/'.join(x))
+    df[['Pack_ID','color_code','qty_size']].groupby(['Pack_ID','color_code'])['qty_size'].agg(lambda x: '/'.join(x))
     df['config_string'] = df.apply(lambda x:'(%s: %s)' % (x['color_code'], x['qty_size']), axis=1)
     df['config_string'] = df[['Pack_ID','config_string']].groupby(['Pack_ID'])['config_string'].transform(lambda x: ''.join(x))
 
